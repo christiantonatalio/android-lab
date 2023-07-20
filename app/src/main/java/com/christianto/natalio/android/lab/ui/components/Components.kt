@@ -1,4 +1,4 @@
-package com.christianto.natalio.android.lab.components
+package com.christianto.natalio.android.lab.ui.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
