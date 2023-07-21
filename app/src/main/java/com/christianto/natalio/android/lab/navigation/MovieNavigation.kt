@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.christianto.natalio.android.lab.screens.details.DetailsScreen
 import com.christianto.natalio.android.lab.screens.home.HomeScreen
+import com.christianto.natalio.android.lab.util.constants.Arguments.MOVIE_TITLE
 
 @Composable
 fun MovieNavigation() {
@@ -22,14 +23,14 @@ fun MovieNavigation() {
         }
 
         composable(
-            route = MovieScreen.DetailsScreen.route + "/{movie_title}",
+            route = MovieScreen.DetailsScreen.route + "/{$MOVIE_TITLE}",
             arguments = listOf(
-                navArgument(name = "movie_title") {
+                navArgument(name = MOVIE_TITLE) {
                     type = NavType.StringType
                 }
             )
         ) { entry ->
-            DetailsScreen(navController, entry.arguments?.getString("movie_title"))
+            DetailsScreen(navController, entry.arguments?.getString(MOVIE_TITLE))
         }
     }
 }

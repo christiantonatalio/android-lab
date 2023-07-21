@@ -1,8 +1,11 @@
 package com.christianto.natalio.android.lab.navigation
 
+import com.christianto.natalio.android.lab.util.constants.Route.DETAIL_SCREEN_ROUTE
+import com.christianto.natalio.android.lab.util.constants.Route.HOME_SCREEN_ROUTE
+
 sealed class MovieScreen (val route: String) {
-    object HomeScreen : MovieScreen("home_screen")
-    object DetailsScreen : MovieScreen("detail_screen")
+    object HomeScreen : MovieScreen(HOME_SCREEN_ROUTE)
+    object DetailsScreen : MovieScreen(DETAIL_SCREEN_ROUTE)
 
     fun withArgs(vararg args: String) : String {
         return buildString {
