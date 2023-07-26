@@ -3,11 +3,11 @@ package com.christianto.natalio.android.lab
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.christianto.natalio.android.lab.screen.NoteScreen
+import com.christianto.natalio.android.lab.screen.NoteViewModel
 import com.christianto.natalio.android.lab.ui.theme.AndroidLabTheme
 
 class MainActivity : ComponentActivity() {
@@ -15,10 +15,26 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyApp {
-                MainContent()
+                val noteViewModel: NoteViewModel by viewModels()
+                NotesApp(noteViewModel)
             }
         }
     }
+}
+
+@Composable
+fun NotesApp(noteViewModel: NoteViewModel = viewModel()) {
+    val notesList = noteViewModel.getAllNotes()
+
+    NoteScreen(
+        notes = notesList,
+        onAddNote = {
+            noteViewModel.addNote(it)
+        },
+        onRemoveNote = {
+            noteViewModel.removeNote(it)
+        }
+    )
 }
 
 @Composable
@@ -26,22 +42,5 @@ fun MyApp(content: @Composable () -> Unit) {
     AndroidLabTheme {
         // A surface container using the 'background' color from the theme
         content()
-    }
-}
-
-@Composable
-fun MainContent() {
-    Surface(
-        color = MaterialTheme.colors.background
-    ) {
-        Text(text = "Hello Android Lab!")
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    MyApp {
-        MainContent()
     }
 }
