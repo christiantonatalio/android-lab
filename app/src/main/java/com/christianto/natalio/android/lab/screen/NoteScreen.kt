@@ -32,7 +32,7 @@ import com.christianto.natalio.android.lab.data.NotesDataSource
 import com.christianto.natalio.android.lab.model.Note
 import com.christianto.natalio.android.lab.ui.components.NoteButton
 import com.christianto.natalio.android.lab.ui.components.NoteInputText
-import java.time.format.DateTimeFormatter
+import com.christianto.natalio.android.lab.util.formatDate
 
 @Composable
 fun NoteScreen(
@@ -143,7 +143,7 @@ fun NoteItem(
             Text(text = note.title, style = MaterialTheme.typography.subtitle2)
             Text(text = note.description, style = MaterialTheme.typography.subtitle1)
             Text(
-                text = note.entryDate.format(DateTimeFormatter.ofPattern("EEE, d MMM")),
+                text = formatDate(note.entryDate.time),
                 style = MaterialTheme.typography.caption
             )
         }

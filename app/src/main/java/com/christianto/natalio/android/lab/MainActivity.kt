@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.collectAsState
 import com.christianto.natalio.android.lab.screen.NoteScreen
 import com.christianto.natalio.android.lab.screen.NoteViewModel
 import com.christianto.natalio.android.lab.ui.theme.AndroidLabTheme
@@ -25,8 +25,8 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun NotesApp(noteViewModel: NoteViewModel = viewModel()) {
-    val notesList = noteViewModel.getAllNotes()
+fun NotesApp(noteViewModel: NoteViewModel) {
+    val notesList = noteViewModel.noteList.collectAsState().value
 
     NoteScreen(
         notes = notesList,
