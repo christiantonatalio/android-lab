@@ -3,11 +3,9 @@ package com.christianto.natalio.android.lab
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.christianto.natalio.android.lab.screen.QuizHome
 import com.christianto.natalio.android.lab.ui.theme.AndroidLabTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,7 +15,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyApp {
-                MainContent()
+                QuizHome()
             }
         }
     }
@@ -31,19 +29,10 @@ fun MyApp(content: @Composable () -> Unit) {
     }
 }
 
-@Composable
-fun MainContent() {
-    Surface(
-        color = MaterialTheme.colors.background
-    ) {
-        Text(text = "Hello Android Lab!")
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyApp {
-        MainContent()
+        QuizHome()
     }
 }
