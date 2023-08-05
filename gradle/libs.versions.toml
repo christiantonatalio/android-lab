@@ -1,5 +1,6 @@
 [versions]
 compose-ui-version = "1.4.3"
+material3-version = "1.1.1"
 nav-version = "2.6.0"
 android-gradle-plugin = "8.1.0"
 kotlin-android = "1.8.10"
@@ -17,7 +18,7 @@ lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtim
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose-version"}
 compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose-ui-version"}
 compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "compose-ui-version"}
-compose-material = { group = "androidx.compose.material", name = "material", version.ref = "compose-ui-version"}
+compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3-version"}
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose-version"}
 junit = { group = "junit", name = "junit", version.ref = "junit-version"}
 test-ext = { group = "androidx.test.ext", name = "junit", version.ref = "ext-junit-version"}
@@ -38,7 +39,7 @@ androidx = [
     "activity-compose",
     "compose-ui",
     "compose-ui-tooling-preview",
-    "compose-material",
+    "compose-material3",
     "navigation-compose",
     "test-ext",
     "test-espresso-core",
