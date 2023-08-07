@@ -14,17 +14,19 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val repository: WeatherRepository
-) : ViewModel(){
-    val data: MutableState<DataOrException<Weather, Boolean, Exception>> = mutableStateOf(DataOrException(
-        null, true, Exception("")
-    ))
+) : ViewModel() {
+    val data: MutableState<DataOrException<Weather, Boolean, Exception>> = mutableStateOf(
+        DataOrException(
+            null, true, Exception("")
+        )
+    )
 
     init {
         loadWeather()
     }
 
     private fun loadWeather() {
-        getWeather("lisbon")
+        getWeather("jakarta")
     }
 
     fun getWeather(city: String) {

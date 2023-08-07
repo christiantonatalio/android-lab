@@ -10,19 +10,16 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
 @Composable
 fun WeatherAppBar(
     modifier: Modifier = Modifier,
@@ -31,16 +28,17 @@ fun WeatherAppBar(
     isMainScreen: Boolean = true,
     elevation: Dp = 0.dp,
     onAddActionClicked: () -> Unit = {},
-    onButtonClicked: () -> Unit = {}
+    onButtonClicked: () -> Unit = {},
+    scrollBehavior: TopAppBarScrollBehavior
 ) {
-    CenterAlignedTopAppBar(modifier = Modifier.shadow(elevation = elevation),
-        title = { Text(
-            text = title,
-            fontWeight = FontWeight.Bold
-        ) },
-        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = Color.Transparent
-        ),
+    CenterAlignedTopAppBar(
+        modifier = modifier.shadow(elevation = elevation),
+        title = {
+            Text(
+                text = title,
+                fontWeight = FontWeight.Bold
+            )
+        },
         actions = {
             if (isMainScreen) {
                 Icon(imageVector = Icons.Default.Search, contentDescription = "Search Icon")
@@ -59,6 +57,7 @@ fun WeatherAppBar(
                     .clickable { onButtonClicked() }
                     .padding(horizontal = 8.dp)
             )
-        }
+        },
+        scrollBehavior = scrollBehavior
     )
 }
