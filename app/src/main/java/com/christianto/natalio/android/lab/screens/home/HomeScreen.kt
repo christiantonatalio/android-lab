@@ -1,5 +1,6 @@
 package com.christianto.natalio.android.lab.screens.home
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,11 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -24,10 +22,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -40,54 +38,56 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.christianto.natalio.android.lab.R
-import com.christianto.natalio.android.lab.data.DataOrException
-import com.christianto.natalio.android.lab.model.Weather
 import com.christianto.natalio.android.lab.model.WeatherDetails
 import com.christianto.natalio.android.lab.model.WeatherX
 import com.christianto.natalio.android.lab.widgets.WeatherAppBar
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    onSearchClicked: () -> Unit = {},
+    onOptionsClicked: () -> Unit = {},
+    city: String?
 ) {
-    val weather = viewModel.data.value
-
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
-    ) {
-        if (weather.loading == true) {
+    city?.let {
+        viewModel.updateCity(city)
+    }
+    val weatherResponse = viewModel.weatherUiState.collectAsState()
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+    when (weatherResponse.value) {
+        is HomeUiState.Error -> {
+            Log.d("INILIO", (weatherResponse.value as HomeUiState.Error).errorMessage)
+        }
+        is HomeUiState.Loading -> {
             Box(
                 modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator()
             }
-        } else {
-            HomeScaffold(weather = weather)
         }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun HomeScaffold(weather: DataOrException<Weather, Boolean, Exception>) {
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    Scaffold(
-        modifier = Modifier
-            .fillMaxSize()
-            .nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            WeatherAppBar(
-                title = "${weather.data?.city?.name}, ${weather.data?.city?.country}",
-                icon = Icons.Default.ArrowBack,
-                scrollBehavior = scrollBehavior
-            )
+        is HomeUiState.Empty -> {}
+        else -> {
+            val weather = (weatherResponse.value as HomeUiState.Success).data
+            Scaffold(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .nestedScroll(scrollBehavior.nestedScrollConnection),
+                topBar = {
+                    WeatherAppBar(
+                        title = "${weather.city?.name}, ${weather.city?.country}",
+                        scrollBehavior = scrollBehavior,
+                        onOptionClicked = { onOptionsClicked() },
+                        onSearchClicked = { onSearchClicked() }
+                    )
+                }
+            ) {
+                HomeContent(
+                    modifier = Modifier.padding(it),
+                    data = weather.list
+                )
+            }
         }
-    ) {
-        HomeContent(
-            modifier = Modifier.padding(it),
-            data = weather.data?.list
-        )
     }
 }
 
@@ -106,9 +106,9 @@ fun HomeContent(
         data?.getOrNull(0)?.let {
             item {
                 WeatherToday(it)
-            }
-            items(data) { weather ->
-                ForecastItem(weather)
+                data.forEach { weather ->
+                    ForecastItem(weather)
+                }
             }
         }
     }

@@ -8,5 +8,6 @@
 .cxx
 local.properties
 .idea/
+misc.xml
 gradle.properties
 gradle/wrapper/gradle-wrapper.properties

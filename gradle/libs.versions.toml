@@ -1,13 +1,13 @@
 [versions]
-compose-ui-version = "1.4.3"
+compose-ui-version = "1.5.0"
 material3-version = "1.1.1"
 nav-version = "2.6.0"
 android-gradle-plugin = "8.1.0"
 kotlin-android = "1.8.10"
 core-ktx-version = "1.10.1"
 lifecycle-runtime-ktx-version = "2.6.1"
-activity-compose-version = "1.7.2"
-navigation-compose-version = "2.6.0"
+activity-compose-version = "1.8.0-alpha06"
+navigation-compose-version = "2.7.0"
 junit-version = "4.13.2"
 ext-junit-version = "1.1.5"
 espresso-core-version = "3.5.1"
@@ -42,6 +42,7 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room-version" }
 hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hilt-version" }
 core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "core-splash-screen" }
+compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 com-google-dagger-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "dagger-hilt-version" }
 com-google-dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "dagger-hilt-version" }
 org-jetbrains-kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutunes-android-version" }
@@ -75,7 +76,8 @@ androidx = [
     "lifecycle-viewmodel-compose",
     "hilt-navigation-compose",
     "room-runtime",
-    "core-splashscreen"
+    "core-splashscreen",
+    "compose-material-icons-extended"
 ]
 
 retrofit2 = [
