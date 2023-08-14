@@ -1,6 +1,6 @@
 package com.christianto.natalio.android.lab.screens.home
 
-import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,6 +29,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -57,7 +58,8 @@ fun HomeScreen(
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     when (weatherResponse.value) {
         is HomeUiState.Error -> {
-            Log.d("INILIO", (weatherResponse.value as HomeUiState.Error).errorMessage)
+            val errorMessage = (weatherResponse.value as? HomeUiState.Error)?.errorMessage
+            Toast.makeText(LocalContext.current, errorMessage, Toast.LENGTH_SHORT).show()
         }
         is HomeUiState.Loading -> {
             Box(

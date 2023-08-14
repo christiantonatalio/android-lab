@@ -7,3 +7,12 @@ enum class WeatherScreens {
     SearchScreen,
     SettingScreen
 }
+
+fun WeatherScreens.withArgs(vararg args: String) : String {
+    return buildString {
+        append(this@withArgs.name)
+        args.forEach { arg ->
+            append("/$arg")
+        }
+    }
+}
