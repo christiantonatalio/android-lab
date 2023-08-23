@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -52,15 +53,17 @@ fun HomeScreen(
     city: String?
 ) {
     city?.let {
-        viewModel.updateCity(city)
+        viewModel.fetchWeatherData(city)
     }
-    val weatherResponse = viewModel.weatherUiState.collectAsState()
+    val weatherState by viewModel.uiState.collectAsState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    when (weatherResponse.value) {
+
+    when (weatherState) {
         is HomeUiState.Error -> {
-            val errorMessage = (weatherResponse.value as? HomeUiState.Error)?.errorMessage
+            val errorMessage = (weatherState as? HomeUiState.Error)?.errorMessage
             Toast.makeText(LocalContext.current, errorMessage, Toast.LENGTH_SHORT).show()
         }
+
         is HomeUiState.Loading -> {
             Box(
                 modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
@@ -68,9 +71,10 @@ fun HomeScreen(
                 CircularProgressIndicator()
             }
         }
-        is HomeUiState.Empty -> {}
-        else -> {
-            val weather = (weatherResponse.value as HomeUiState.Success).data
+
+        is HomeUiState.Success -> {
+            val weather = (weatherState as HomeUiState.Success).data
+            val isFavoriteState = (weatherState as HomeUiState.Success).isFavorite
             Scaffold(
                 modifier = Modifier
                     .fillMaxSize()
@@ -78,9 +82,17 @@ fun HomeScreen(
                 topBar = {
                     WeatherAppBar(
                         title = "${weather.city?.name}, ${weather.city?.country}",
+                        isFavorite = isFavoriteState,
                         scrollBehavior = scrollBehavior,
                         onOptionClicked = { onOptionsClicked() },
-                        onSearchClicked = { onSearchClicked() }
+                        onSearchClicked = { onSearchClicked() },
+                        onFavoriteClicked = {
+                            viewModel.onFavoriteClicked(
+                                weather.city?.name.orEmpty(),
+                                weather.city?.country.orEmpty(),
+                                !isFavoriteState
+                            )
+                        }
                     )
                 }
             ) {
@@ -90,6 +102,8 @@ fun HomeScreen(
                 )
             }
         }
+
+        else -> {}
     }
 }
 

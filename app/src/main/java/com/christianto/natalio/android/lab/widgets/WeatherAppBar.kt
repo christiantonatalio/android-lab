@@ -8,6 +8,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Favorite
+import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -15,6 +17,7 @@ import androidx.compose.material3.DockedSearchBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
@@ -32,9 +35,11 @@ fun WeatherAppBar(
     modifier: Modifier = Modifier,
     title: String = "Title",
     isMainScreen: Boolean = true,
+    isFavorite: Boolean = false,
     elevation: Dp = 0.dp,
     onBackClicked: () -> Unit = {},
     onSearchClicked: () -> Unit = {},
+    onFavoriteClicked: (Boolean) -> Unit = {},
     onOptionClicked: () -> Unit = {},
     scrollBehavior: TopAppBarScrollBehavior? = null
 ) {
@@ -65,11 +70,32 @@ fun WeatherAppBar(
                     )
                 }
             } else {
-                IconButton(onClick = { onSearchClicked() }) {
-                    Icon(
-                        imageVector = Icons.Rounded.Search,
-                        contentDescription = "Search Icon",
-                    )
+                Row {
+                    if (isFavorite) {
+                        IconButton(
+                            onClick = { onFavoriteClicked(false) }) {
+                            Icon(
+                                imageVector = Icons.Rounded.Favorite,
+                                contentDescription = "Favorite Icon",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    } else {
+                        IconButton(
+                            onClick = { onFavoriteClicked(true) }) {
+                            Icon(
+                                imageVector = Icons.Rounded.FavoriteBorder,
+                                contentDescription = "Favorite Icon",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    }
+                    IconButton(onClick = { onSearchClicked() }) {
+                        Icon(
+                            imageVector = Icons.Rounded.Search,
+                            contentDescription = "Search Icon"
+                        )
+                    }
                 }
             }
         },
