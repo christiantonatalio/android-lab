@@ -3,6 +3,7 @@ import com.android.build.api.dsl.Packaging
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
+    alias(libs.plugins.com.google.gms.google.service)
 }
 
 android {
@@ -52,6 +53,8 @@ android {
 dependencies {
 
     implementation(libs.bundles.androidx)
+    implementation(platform(libs.com.google.firebase))
+    implementation(libs.firebase.analytics)
     testImplementation(libs.junit)
     androidTestImplementation(libs.bundles.androidx)
     debugImplementation(libs.bundles.androidx)

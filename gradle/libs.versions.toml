@@ -11,6 +11,8 @@ navigation-compose-version = "2.7.0"
 junit-version = "4.13.2"
 ext-junit-version = "1.1.5"
 espresso-core-version = "3.5.1"
+google-services = "4.3.15"
+google-firebase = "32.2.2"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx-version"}
@@ -26,11 +28,14 @@ test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core",
 compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "compose-ui-version"}
 compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose-ui-version"}
 compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest", version.ref = "compose-ui-version"}
+com-google-firebase = { group = "com.google.firebase", name = "firebase-bom", version.ref = "google-firebase"}
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
 com-android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-android" }
+com-google-gms-google-service = { id = "com.google.gms.google-services", version.ref = "google-services" }
 
 [bundles]
 androidx = [
