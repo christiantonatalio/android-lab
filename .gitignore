@@ -11,3 +11,5 @@ local.properties
 misc.xml
 gradle.properties
 gradle/wrapper/gradle-wrapper.properties
+
+app/google-services.json
