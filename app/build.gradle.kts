@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.christianto.natalio.android.lab"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.christianto.natalio.android.lab"
         minSdk = 26
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
