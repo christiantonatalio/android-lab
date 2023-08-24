@@ -7,6 +7,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.christianto.natalio.android.lab.ui.theme.AndroidLabTheme
 
@@ -34,7 +35,8 @@ fun MainContent() {
     Surface(
         color = MaterialTheme.colorScheme.background
     ) {
-        Text(text = "Hello Android Lab!")
+        val appName = stringResource(R.string.app_name)
+        Text(text = "Hello $appName")
     }
 }
 
