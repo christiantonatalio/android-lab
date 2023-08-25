@@ -1,9 +1,11 @@
 import com.android.build.api.dsl.Packaging
 
 plugins {
+    alias(libs.plugins.com.google.devtools.ksp)
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.com.google.gms.google.service)
+    alias(libs.plugins.com.google.dagger.hilt.android)
 }
 
 android {
@@ -55,6 +57,14 @@ dependencies {
     implementation(libs.bundles.androidx)
     implementation(platform(libs.com.google.firebase))
     implementation(libs.firebase.analytics)
+    implementation(libs.bundles.retrofit2)
+    implementation(libs.com.google.dagger.hilt.android)
+    implementation(libs.org.jetbrains.kotlinx.coroutines.android)
+    implementation(libs.okhttp)
+    implementation(libs.io.coil.kt.compose)
+    annotationProcessor(libs.room.compiler)
+    ksp(libs.com.google.dagger.hilt.compiler)
+    ksp(libs.hilt.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.bundles.androidx)
     debugImplementation(libs.bundles.androidx)
